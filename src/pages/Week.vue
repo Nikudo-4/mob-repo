@@ -5,11 +5,13 @@
         <q-btn class="float-left q-pr-sn"  icon="keyboard_arrow_left"  flat
         dense @click="minusWeek()" />
       </div>
+
       <div class="col-10" id="butt">
         <q-btn class="dateFond" @click="()=>{vision = !vision;}" >
           {{formatBtn}}
         </q-btn>
       </div>
+
       <div class="col-1">
         <q-btn class="float-right q-pl-sn"  icon="keyboard_arrow_right"  flat
         dense @click="plusWeek()" />
@@ -21,7 +23,7 @@
        @change="closePicker"
        -->
       <q-date class="col"
-        v-model="date" 
+        v-model="date1"
         minimal
         v-touch-swipe.mouse.right="handleSwipeR"
         v-touch-swipe.mouse.left="handleSwipeL"
@@ -30,17 +32,22 @@
         
     </div>
     <q-card
-      class="q-mt-sm my-card"
+      class="q-mt-sm  my-card"
+      style="background: linear-gradient(#9198e5, #535bb5 );"
       bordered
     >
       <q-card-section class="text-white"
-        style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)"
+       v-for="(objectDay, index) in objectDays.date" :key="index"
         v-touch-swipe.mouse.right="handleSwipeWeekR"
         v-touch-swipe.mouse.left="handleSwipeWeekL"
         >
-        <div class="text-h6"  v-for="(objectDay, index) in objectDays.date" :key="index" >
-          {{objectDay.date}}
-          <q-card-section class="" v-for="subject in subjects" :key="subject.name">
+        <div class="q-pt-md text-h6"
+         style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%); 
+         border-radius: 13em/2.5em; text-align:center;"
+           >
+          {{objectDay.name}}{{objectDay.date}}
+          <q-separator inset />
+          <q-card-section style="opacity: 0.9" v-for="subject in subjects" :key="subject.name">
             {{subject.name}}: {{subject.assessment}}
           </q-card-section>
         </div>
@@ -53,7 +60,7 @@
 <style>
  
 .dateFond{
- background: white;
+ /* background: white; */
  width: 100%;
 }
 .my-card{
@@ -66,85 +73,44 @@
 
 <script>
 import moment, { locale } from 'moment'
-import AppHelper from './AppHelper'
+import {mapGetters, mapActions , mapMutations} from 'vuex'
 
 
 export default {
   
   data () {
     return {
-    date: AppHelper.date,
-    n:'',
     vision: false,
-    subjects: AppHelper.subjects
+    d: new Date(Date.now()),
+  
     }
   },
+
   computed:{
-    formatBtn(date){
-      this.n = new Date(this.date)
-      let startw = moment(this.n).startOf('isoWeeks'); //начало недели 
-      let endw = moment(this.n).endOf('isoWeeks');//конец недели
-      let stroka = `${moment(startw).format('DD')}-${moment(endw).format('DD')} ${moment(this.date).locale('ru').format('MMMM YYYY')}`
-      return stroka
-    },
-    objectDays() {
-    return {
-      date: [ 
-      { id:1, date: moment(this.date).isoWeekday(1).locale('ru').format('dddd, D MMM')},
-      { id:2, date: moment(this.date).isoWeekday(2).locale('ru').format('dddd, D MMM')},
-      { id:3, date: moment(this.date).isoWeekday(3).locale('ru').format('dddd, D MMM')},
-      { id:4, date: moment(this.date).isoWeekday(4).locale('ru').format('dddd, D MMM')},
-      { id:5, date: moment(this.date).isoWeekday(5).locale('ru').format('dddd, D MMM')},
-      { id:6, date: moment(this.date).isoWeekday(6).locale('ru').format('dddd, D MMM')}
-      ]}
+    date1: {
+      get () {
+        return this.$store.state.date
       },
+      set (date) {
+        this.$store.commit('updateDate', date)
+      }
+    },
+      objectMonth(){
+        let a = state.date
+        let f = moment(a).daysInMonth();
+        return f
+      },
+
+    ...mapGetters(["formatBtn","objectDays","subjects","objectMonth1"]),
+
+
 
     // не пойму как привязать текущий день к нужному ему массиву рассписания
-
-    
-
   },
   methods:{
-      plusWeek(date){
-        let t = this.date
-        t = moment(t).add(1,'isoWeek')
-        this.date = t
-        return this.date
-        alert(this.date.day)
-      },
-      minusWeek(date){
-        let t = this.date
-        t = moment(t).add(-1,'isoWeek')
-        this.date = t
-        return this.date
-      },
-      events(date){
-        return moment(date).locale("ru").format('')
-      },
-      handleSwipeR(date){
-        let t = this.date
-        t = moment(t).add(1,'months')
-        this.date = t
-        return this.date
-      },
-      handleSwipeL(date){
-        let t = this.date
-        t = moment(t).add(-1,'months')
-        this.date = t
-        return this.date
-      },
-      handleSwipeWeekR(date){
-        let t = this.date
-        t = moment(t).add(1,'isoWeek')
-        this.date = t
-        return this.date
-      },
-      handleSwipeWeekL(date){
-        let t = this.date
-        t = moment(t).add(-1,'isoWeek')
-        this.date = t
-        return this.date
-      },
+    ...mapActions(['updateDate']),
+    ...mapMutations(["plusWeek","minusWeek","handleSwipeR","handleSwipeL","handleSwipeWeekR","handleSwipeWeekL"]), 
+
       handleSwipeT(){
         return this.vision=!this.vision
       }

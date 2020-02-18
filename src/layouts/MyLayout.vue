@@ -67,7 +67,7 @@
           <q-btn>+</q-btn>
         </div>
       </div>
-        <q-item clickable tag="a" target="_blank" href="#">
+        <q-item clickable tag="a" target="_blank" to='/week'>
           <q-item-section avatar>
             <q-icon name="school" />
           </q-item-section>

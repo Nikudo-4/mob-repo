@@ -1,8 +1,10 @@
 <template>
   <div>
-  <router-view to="/week"><h3>Электронный журнал</h3></router-view>
+  <h3>Электронный журнал</h3>
     <span >Школа № 30</span>
+    <div>
     <q-btn @click="scan()">go scan</q-btn>
+    </div>
   </div>
 </template>
 
