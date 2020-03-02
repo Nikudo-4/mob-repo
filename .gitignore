@@ -2,6 +2,11 @@
 .thumbs.db
 node_modules
 
+./build.cordova.json
+./quasar-debug-key.jks
+./quasar-debug-key.jks.old
+./quasar-release-key.jks
+./quasar-release-key.jks.old
 # Quasar core related directories
 .quasar
 /dist

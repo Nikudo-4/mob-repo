@@ -64,7 +64,7 @@
             <span>Александра (8А)</span>
           </div>
         <div class="col-4" >
-          <q-btn>+</q-btn>
+          <q-btn to="/">+</q-btn>
         </div>
       </div>
         <q-item clickable tag="a" target="_blank" to='/week'>
@@ -156,7 +156,6 @@ export default {
 
   data () {
     return {
-      //date1: new Date(Date.now()),
       leftDrawerOpen: false,
        tab: 'mails',
         w:false
@@ -188,6 +187,9 @@ export default {
         else if (currentPath == '/list'){
           this.w = !this.w
           return this.w
+          }
+        else if (currentPath == '/'){
+          return this.w = false 
           }
       },
       //       linkedBtn(){

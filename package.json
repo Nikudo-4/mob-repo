@@ -2,14 +2,16 @@
   "name": "mob-repo",
   "version": "0.0.1",
   "description": "Naska Team",
-  "productName": "Electronic journal",
+  "productName": "Электронный журнал",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
   "author": "Nikudo-4 <kunach1lo@gmail.com>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "cordova:dev": "quasar dev -m cordova -T android -- --buildConfig=\"../build.cordova.json\"",
+    "cordova:build": "quasar build -m cordova -T android -- --buildConfig=\"../build.cordova.json\""
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",

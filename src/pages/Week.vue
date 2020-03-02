@@ -33,7 +33,6 @@
     </div>
     <q-card
       class="q-mt-sm  my-card"
-      style="background: linear-gradient(#9198e5, #535bb5 );"
       bordered
     >
       <q-card-section class="text-white"
@@ -43,7 +42,7 @@
         >
         <div class="q-pt-md text-h6"
          style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%); 
-         border-radius: 13em/2.5em; text-align:center;"
+          text-align:center;"
            >
           {{objectDay.name}}{{objectDay.date}}
           <q-separator inset />
